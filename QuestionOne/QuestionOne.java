@@ -1,4 +1,5 @@
 import java.util.*; 
+import java.io.*;
 
 class QuestionOne {
 
@@ -13,11 +14,24 @@ class QuestionOne {
 
 
     public static void main(String[] args) {
-        for (Integer num : numbers) {
+        final ArrayList<Integer> listOfLines = new ArrayList<>();
+        
+        try (final BufferedReader bufReader = new BufferedReader(new FileReader("input.txt"))) {
+            String line = bufReader.readLine(); 
+            while (line != null) { 
+                listOfLines.add(Integer.parseInt(line)); 
+                line = bufReader.readLine(); 
+            }    
+        } catch (IOException e) {
+            System.out.println("Error reading in File. Exiting Program.");
+            return;
+        }
+
+        for (Integer num : listOfLines) {
             final int desiredValue = sum - num;
-            if (numbers.contains(desiredValue)) {
-                System.out.println(num + " & " + desiredValue);
+            if (listOfLines.contains(desiredValue)) {
                 System.out.println("Final Anwser is: " + desiredValue*num);
+                return;
             }
         }
     }
